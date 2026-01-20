@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laptop Price Calculations</title>
+</head>
+<body>
+        <script>
+        
+      //  const laptopPrices = [1500, 2500, 3000, 1800];
+        const laptopPrices = [
+                      {item:"Laptop A", price: 1500},
+                      {item:"Laptop B", price: 2500},
+                      {item:"Laptop C", price: 3000},
+                      {item:"Laptop D", price: 1800} ];
+
+        document.write("<strong>Original Prices:</strong> " + laptopPrices + "<br><br>");
+
+     
+        const discountedLaptops = [];
+        for(let i = 0; i < laptopPrices.length; i++) {
+            discountedLaptops.push(laptopPrices[i] * 0.90);
+        }
+        document.write("10% Discounted Prices: " + discountedLaptops + "<br>");
+
+        const expensiveLaptops = [];
+        for(let i = 0; i < laptopPrices.length; i++) {
+            if(laptopPrices[i] > 2000) {
+                expensiveLaptops.push(laptopPrices[i]);
+            }
+        }
+        document.write("Laptops costing > 2000: " + expensiveLaptops + "<br>");
+
+      
+        let totalPrice = 0;
+        for(let i = 0; i < laptopPrices.length; i++) {
+            totalPrice += laptopPrices[i];
+        }
+        document.write("Total Price Sum: " + totalPrice + "<br><br>");
+
+
+        
+
+        
+        const mapDiscounted = laptopPrices.map(price => price - (price * 0.10));
+        document.write("10% Discounted Prices: " + mapDiscounted + "<br>");
+
+        
+        const filterExpensive = laptopPrices.filter(price => price > 2000);
+        document.write("Laptops costing > 2000: " + filterExpensive + "<br>");
+
+        const reduceTotal = laptopPrices.reduce((sum, price) => sum + price, 0);
+        document.write("Total Price Sum: " + reduceTotal + "<br>");
+
+    </script>   
+</body>
+</html>

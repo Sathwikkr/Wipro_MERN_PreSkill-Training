@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+        button { margin-right: 5px; cursor: pointer; padding: 5px 10px; }
+        ul { margin-top: 20px; }
+        li { margin-bottom: 5px; background: #f4f4f4; padding: 5px; border-radius: 4px; list-style: none; }
+    </style>
+</head>
+<body>
+
+    <h3>Product Management (Local CRUD)</h3>
+
+    <button onclick="displayProducts()">Display Products</button>
+    <button onclick="addProduct()">Add Product</button>
+    <button onclick="updateProduct()">Update Product</button>
+    <button onclick="deleteProduct()">Delete Product</button>
+
+    <ul id="productList"></ul>
+
+<script>
+
+    // 1. Initial JSON Data parsed into a JavaScript Array
+    const jsonData = `[
+        {"item" : "Laptop" , "price" : 60000},
+        {"item" : "Mouse" , "price" : 500},
+        {"item" : "Keyboard" , "price" : 700},
+        {"item" : "Speaker" , "price" : 5000}
+    ]`;
+
+    let products = JSON.parse(jsonData);
+    const listElement = document.getElementById("productList");
+
+
+    // READ: Display the list
+    function displayProducts() {
+        listElement.innerHTML = ""; // Clear list first
+        products.forEach((p, index) => {
+            const li = document.createElement("li");
+            li.textContent = `ID: ${index} | Item: ${p.item} | Price: ₹${p.price}`
+            listElement.append(li);
+        });
+    }
+
+    // CREATE: Add a new product
+    function addProduct() {
+        const itemName = prompt("Enter product name:");
+        const itemPrice = prompt("Enter product price:");
+
+        if (itemName && itemPrice) {
+            const newProduct = { item: itemName, price: parseInt(itemPrice) };
+            products.push(newProduct);
+            alert("Product Added!");
+            displayProducts();
+        }
+    }
+
+    // UPDATE: Update by Index
+    function updateProduct() {
+        const id = prompt("Enter the Index ID (0, 1, 2...) to update:");
+        
+        if (products[id]) {
+            const newPrice = prompt(`Enter new price for ${products[id].item}:`, products[id].price);
+            if (newPrice) {
+                products[id].price = parseInt(newPrice);
+                alert("Product Updated!");
+                displayProducts();
+            }
+        } else {
+            alert("Product not found.");
+        }
+    }
+
+    // DELETE: Remove by Index
+    function deleteProduct() {
+        const id = prompt("Enter the Index ID to delete:");
+        
+        if (products[id]) {
+            products.splice(id, 1); // Removes 1 element at the specified index
+            alert("Product Deleted!");
+            displayProducts();
+        } else {
+            alert("Invalid ID.");
+        }
+    }
+
+    // Initial load
+    displayProducts();
+
+</script>
+</body>
+</html>

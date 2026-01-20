@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard</title>
+    
+</head>
+<body>
+
+<div class="container">
+    <h1>Todo Directory</h1>
+    
+    <div id="loading" class="loading">Loading data from backend...</div>
+    
+    <div id="error" class="error-msg"></div>
+
+    <table id="todoTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Email</th> <th>Status</th>
+                <th>Task Title</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            </tbody>
+    </table>
+</div>
+
+<script>
+    
+    const TODOS_API = 'https://jsonplaceholder.typicode.com/todos';
+    const USERS_API = 'https://jsonplaceholder.typicode.com/users';
+
+    const table = document.getElementById('todoTable');
+    const tableBody = document.getElementById('tableBody');
+    const loadingDiv = document.getElementById('loading');
+    const errorDiv = document.getElementById('error');
+
+   
+    Promise.all([
+        fetch(TODOS_API).then(res => {
+            if (!res.ok) throw new Error('Failed to load Todos');
+            return res.json();
+        }),
+        fetch(USERS_API).then(res => {
+            if (!res.ok) throw new Error('Failed to load Users');
+            return res.json();
+        })
+    ])
+    .then(([todos, users]) => {
+        
+        const slicedTodos = todos.slice(0, 5);
+
+        // Render the data
+        slicedTodos.forEach(task => {
+            
+            const user = users.find(u => u.id === task.userId);
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${task.userId}</td>
+                <td>${user ? user.email : 'No Email Found'}</td>
+                <td class="${task.completed ? 'status-done' : 'status-pending'}">
+                    ${task.completed ? '✓ Completed' : '⟳ Pending'}
+                </td>
+                <td>${task.title}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Update UI
+        loadingDiv.style.display = 'none';
+        table.style.display = 'table';
+    })
+    .catch(error => {
+        // Handle the api failure using Promise .catch()
+        console.error('System Error:', error);
+        loadingDiv.style.display = 'none';
+        errorDiv.style.display = 'block';
+        errorDiv.innerText = 'Error: Could not fetch directory data. Please try again.';
+    });
+</script>
+
+</body>
+</html>
