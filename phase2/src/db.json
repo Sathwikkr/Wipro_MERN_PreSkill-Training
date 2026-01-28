@@ -1,0 +1,56 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "name": "Latest Clothes",
+      "img": "/images/jacket.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Trendy Shoes",
+      "img": "/images/shoes.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Stylish Bags",
+      "img": "/images/bags.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Jacket",
+      "img": "/images/top.jpg",
+      "price": 120
+    },
+    {
+      "id": "2",
+      "name": "Shoes",
+      "img": "/images/pshoe.jpg",
+      "price": 85
+    },
+    {
+      "id": "3",
+      "name": "Hat",
+      "img": "/images/hat.jpg",
+      "price": 25
+    },
+    {
+      "id": "4",
+      "name": "Bags",
+      "img": "/images/bags.jpg",
+      "price": 60
+    },
+    {
+      "id": "5",
+      "name": "Pants",
+      "img": "/images/pants.jpg",
+      "price": 60
+    },
+    {
+      "id": "6",
+      "name": "Shirt",
+      "img": "/images/shirt.jpg"
+    }
+  ]
+}
