@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Flowers School - Student Portal</title>
+    <style>
+        
+        :root {
+            --primary-color: #4a90e2;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 20px;
+        }
+
+        h2, h3 { color: #333; text-align: center; margin-bottom: 1.5rem; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #666; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box; /* Fixes padding width issues */
+        }
+
+       
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .btn:hover { background-color: #357abd; }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            margin-top: 10px;
+        }
+
+        .activity-card {
+            background: #eef2f5;
+            border-left: 5px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            animation: fadeIn 0.5s;
+        }
+
+       
+        .hidden { display: none !important; }
+        .error { color: red; text-align: center; margin-top: 10px; font-size: 0.9em; }
+
+       
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <div id="login-view">
+       
+       <h1 style="text-align: center;">Spring Flowers School</h1>              
+        <h2>Student Login</h2>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter 'SATHWIK'">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter 'wipro'">
+        </div>
+        <button class="btn" onclick="handleLogin()">Login</button>
+        <p class="error" id="login-error"></p>
+    </div>
+
+    <div id="welcome-view" class="hidden">
+        <h2>Welcome, <span id="display-name">Student</span>!</h2>
+        <p style="text-align: center; color: #666;">Spring Flowers School Dashboard</p>
+        <br>
+        <button class="btn" onclick="navigateToActivity()">View Monthly Chart</button>
+        <button class="btn btn-outline" onclick="logout()">Logout</button>
+    </div>
+
+    <div id="activity-view" class="hidden">
+        <h3>Monthly Activities</h3>
+        
+        <div class="form-group">
+            <label for="subject-select">Filter by Subject:</label>
+            <select id="subject-select" onchange="filterActivities()">
+                <option value="All">All Subjects</option>
+                <option value="Maths">Maths</option>
+                <option value="Science">Science</option>
+                <option value="English">English</option>
+                <option value="History">History</option>
+            </select>
+        </div>
+
+        <div id="activity-list">
+            </div>
+
+        <button class="btn btn-outline" onclick="navigateToWelcome()">Back to Dashboard</button>
+    </div>
+
+</div>
+
+<script>    
+    
+    const users = [
+        { username: "SATHWIK", password: "wipro", name: " Rudroju Sathwik Kumar" },
+        { username: "admin", password: "admin", name: "Principal" }
+    ];
+
+    const activitiesData = [
+        { id: 1, activity: "Create project file which contains tables between 12 to 19", subject: "Maths" },
+        { id: 2, activity: "Draw a labeled diagram of the digestive system", subject: "Science" },
+        { id: 3, activity: "Write an essay on 'My Summer Vacation'", subject: "English" },
+        { id: 4, activity: "Solve the geometry worksheet #4", subject: "Maths" },
+        { id: 5, activity: "Read Chapter 3 of 'Modern History'", subject: "History" },
+        { id: 6, activity: "Complete the chemistry lab report", subject: "Science" }
+    ];
+    const loginView = document.getElementById('login-view');
+    const welcomeView = document.getElementById('welcome-view');
+    const activityView = document.getElementById('activity-view');
+    const errorMsg = document.getElementById('login-error');
+    const activityList = document.getElementById('activity-list');
+
+
+    function handleLogin() {
+        const userIn = document.getElementById('username').value;
+        const passIn = document.getElementById('password').value;
+
+        const validUser = users.find(u => u.username === userIn && u.password === passIn);
+
+        if (validUser) {
+           
+            document.getElementById('display-name').textContent = validUser.name;
+            switchView(welcomeView);
+            errorMsg.textContent = ""; 
+        } else {
+          
+            errorMsg.textContent = "Invalid Username or Password";
+        }
+    }
+
+    function navigateToActivity() {
+        switchView(activityView);
+        renderActivities(activitiesData); 
+
+    function navigateToWelcome() {
+        switchView(welcomeView);
+    }
+
+    function logout() {
+      
+        document.getElementById('username').value = "";
+        document.getElementById('password').value = "";
+        switchView(loginView);
+    }
+
+    function switchView(viewToShow) {
+    
+        loginView.classList.add('hidden');
+        welcomeView.classList.add('hidden');
+        activityView.classList.add('hidden');
+        
+      
+        viewToShow.classList.remove('hidden');
+    }
+
+
+    function renderActivities(data) {
+        activityList.innerHTML = ""; 
+
+        if(data.length === 0) {
+            activityList.innerHTML = "<p style='text-align:center'>No activities found.</p>";
+            return;
+        }
+
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'activity-card';
+            card.innerHTML = `
+                <strong>${item.subject}</strong>
+                <p>${item.activity}</p>
+            `;
+            activityList.appendChild(card);
+        });
+    }
+
+    function filterActivities() {
+        const selectedSubject = document.getElementById('subject-select').value;
+
+        if (selectedSubject === "All") {
+            renderActivities(activitiesData);
+        } else {
+            // Filter the array based on subject
+            const filteredData = activitiesData.filter(item => item.subject === selectedSubject);
+            renderActivities(filteredData);
+        }
+    }
+
+</script>
+
+</body>
+</html>

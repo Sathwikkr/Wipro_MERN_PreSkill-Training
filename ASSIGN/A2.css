@@ -1,0 +1,52 @@
+body {
+    background-color: #f5f9ff;
+}
+
+/* SECTION COMMON */
+.section {
+    padding: 60px 20px;
+}
+
+/* HOME SECTION */
+.home-section {
+    min-height: 80vh;
+}
+
+/* PROFILE CARD */
+.profile-card {
+    max-width: 350px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* TIMETABLE */
+.timetable-section {
+    background: linear-gradient(to right, #eef2ff, #f9fbff);
+}
+
+.timetable-box {
+    max-width: 95%;
+    margin: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.table-hover tbody tr:hover {
+    background-color: #dbeafe;
+    transition: 0.3s;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wipro NGA Dashboard - Fetch API Assignment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>User Dashboard</h1>
+    </header>
+
+    <main class="container">
+        <div id="error-container" class="error-msg" style="display: none;"></div>
+
+        <div class="content-grid">
+            <section class="column">
+                <h2>Latest Blog Posts</h2>
+                <div id="posts-list" class="list-container">
+                    <p class="loading">Fetching posts...</p>
+                </div>
+            </section>
+
+            <section class="column">
+                <h2>My Todo List</h2>
+                <div id="todos-list" class="list-container">
+                    <p class="loading">Fetching tasks...</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
