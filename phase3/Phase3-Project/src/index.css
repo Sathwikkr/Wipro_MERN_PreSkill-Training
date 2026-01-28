@@ -1,0 +1,145 @@
+@import 'tailwindcss';
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif; /* Modern font */
+  background-color: #f8f9fa;
+  color: #333;
+  overflow-x: hidden; /* Prevents scrollbar flickering during transitions */
+}
+
+/* =========================================
+   1. ANIMATION & TRANSITION CLASSES
+   ========================================= */
+
+/* ⚠️ MISSING CLASS ADDED HERE */
+/* This ensures the pages animate relative to this container, not the whole screen */
+.main-container {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+}
+
+.fade-enter {
+  opacity: 0;
+  transform: translateX(20px);
+  z-index: 1;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
+
+/* Fixes the layout so pages don't stack vertically during animation */
+.page-wrapper {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* We need this relative to contain the absolute page-wrapper */
+#root {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* =========================================
+   2. EXISTING STYLES
+   ========================================= */
+
+/* Header Adjustments */
+.header {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white; /* Ensure header has a background so content doesn't show through */
+}
+
+/* Hero Section */
+.hero {
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 80px;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  background-color: #555; /* Fallback color */
+}
+
+.hero h1 { font-size: 3rem; margin-bottom: 10px; }
+.hero button {
+  padding: 12px 30px;
+  background: #2979ff;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: 0.3s;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+.hero button:hover { background: #0056b3; transform: scale(1.05); }
+
+/* Categories & Products Grid */
+.categories, .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 50px 80px;
+}
+
+/* Modern Card Styling */
+.category-card, .product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  padding: 15px;
+  text-align: center;
+}
+
+.category-card:hover, .product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.category-card img, .product-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.category-card p, .product-card p {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+
+/* Footer Styling */
+.footer {
+  margin-top: 50px;
+  padding: 30px;
+  background: #c8e1f4;
+  font-weight: 500;
+  position: relative; 
+  z-index: 10;
+  text-align: center;
+}
